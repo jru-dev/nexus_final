@@ -1,8 +1,8 @@
 <?php
 
-// app/Http/Middleware/RedirectIfAuthenticated.php
 namespace App\Http\Middleware;
 
+use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,17 +23,12 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 $user = Auth::user();
                 
-                // Solo redirigir si están tratando de acceder a login o register
-                if ($request->routeIs('login') || $request->routeIs('register')) {
-                    if ($user->role === 'user') {
-                        return redirect()->route('user.dashboard');
-                    } elseif ($user->role === 'admin') {
-                        return redirect()->route('admin.dashboard');
-                    }
+                // Redirigir según el rol del usuario
+                if ($user->isAdmin()) {
+                    return redirect('/admin/dashboard');
+                } else {
+                    return redirect('/user/dashboard');
                 }
-                
-                // Para otras rutas, dejar que continúe normalmente
-                return $next($request);
             }
         }
 
