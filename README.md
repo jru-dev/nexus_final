@@ -1,199 +1,274 @@
-🎮 NEXUS - Gaming Platform
-Una plataforma completa de videojuegos desarrollada con Laravel que incluye tienda, foro, sistema de reseñas y gestión de usuarios.
-🚀 Características
+# 🎮 NEXUS
+Plataforma completa de videojuegos desarrollada en Laravel
 
-🛒 Tienda de videojuegos con carrito de compras
-👥 Sistema de usuarios (Admin/Usuario)
-💬 Foro comunitario por juegos
-⭐ Sistema de reseñas y valoraciones
-📚 Biblioteca personal de juegos
-🎯 Panel de administración completo
-💳 Múltiples métodos de pago (Tarjeta/Yape)
+## 📖 Descripción
+NEXUS es una plataforma web que revoluciona la experiencia gaming. Los usuarios pueden comprar videojuegos, escribir reseñas, participar en foros comunitarios y gestionar su biblioteca personal. Los administradores tienen control total sobre juegos, usuarios y contenido, mientras que el sistema incluye múltiples métodos de pago y categorización avanzada.
 
-📋 Requisitos Previos
+## 🚀 Tecnologías
+- **Backend**: Laravel 11
+- **Frontend**: Blade Templates + CSS personalizado + JavaScript
+- **Base de Datos**: MySQL/SQLite
+- **Autenticación**: Laravel Breeze
+- **Pagos**: Sistema de tarjetas + Yape (QR)
+
+## 📋 Prerrequisitos
 Antes de instalar, asegúrate de tener:
+- PHP >= 8.1
+- Composer
+- Node.js >= 16
+- MySQL/SQLite
+- Git
 
-PHP >= 8.1
-Composer
-Node.js & npm
-Base de datos (MySQL/SQLite)
-Git
+## 🛠️ Instalación
 
-🛠️ Instalación
-1. Clonar el repositorio
-bashgit clone https://github.com/tu-usuario/nexus.git
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/tu-usuario/nexus.git
 cd nexus
-2. Instalar dependencias de PHP
-bashcomposer install
-3. Instalar dependencias de Node.js
-bashnpm install
-4. Configurar el archivo de entorno
-bash# Copiar el archivo de ejemplo
+```
+
+### 2. Instalar dependencias de PHP
+```bash
+composer install
+```
+
+### 3. Instalar dependencias de Node.js
+```bash
+npm install
+npm run build
+```
+
+### 4. Configurar el archivo de entorno
+```bash
+# Copiar el archivo de ejemplo
 cp .env.example .env
 
 # Generar la clave de aplicación
 php artisan key:generate
-5. Configurar la base de datos
+```
 
+### 5. Configurar la base de datos
+Edita el archivo `.env` con los datos de tu base de datos:
+
+
+```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_DATABASE=nexus
 DB_USERNAME=tu_usuario
 DB_PASSWORD=tu_contraseña
+```
 
-6. Ejecutar migraciones y seeders
-bash# Ejecutar migraciones
+### 6. Crear la base de datos
+
+```sql
+-- En tu cliente MySQL/phpMyAdmin
+CREATE DATABASE nexus;
+```
+
+### 7. Ejecutar migraciones y seeders
+```bash
+# Ejecutar las migraciones (IMPORTANTE: en orden correcto)
 php artisan migrate
 
-# Ejecutar seeders (datos de prueba)
+# Poblar la base de datos con datos iniciales
 php artisan db:seed
-8. Crear enlace simbólico para archivos públicos
-bashphp artisan storage:link
-9. Compilar assets
-bash
+```
 
-# Para desarrollo
-npm run dev
+### 8. Configurar archivos públicos
+```bash
+# Crear enlace simbólico para archivos de storage
+php artisan storage:link
+```
 
-# Para producción
-npm run build
-10. Iniciar el servidor de desarrollo
-bashphp artisan serve
-¡Listo! La aplicación estará disponible en http://localhost:8000
-👤 Usuarios de Prueba
-El seeder crea automáticamente estos usuarios:
-Administrador
+### 9. Iniciar el servidor de desarrollo
+```bash
+php artisan serve
+```
 
-Email: admin@nexus.com
-Contraseña: admin123
-Rol: Admin
+La aplicación estará disponible en: `http://localhost:8000`
 
-Usuarios Normales
+## 👥 Usuarios de Prueba
 
-Email: juan@gmail.com | Contraseña: password123
-Email: maria@gmail.com | Contraseña: password123
-Email: carlos@gmail.com | Contraseña: password123
+### Administrador
+- **Email**: admin@nexus.com
+- **Contraseña**: admin123
 
-🗂️ Estructura del Proyecto
+### Usuarios Normales
+- **Email**: juan@gmail.com
+- **Contraseña**: password123
+- **Email**: maria@gmail.com
+- **Contraseña**: password123
+- **Email**: carlos@gmail.com
+- **Contraseña**: password123
+
+## 📁 Estructura del Proyecto
+
+```
 nexus/
 ├── app/
-│   ├── Http/Controllers/
-│   │   ├── Auth/              # Controladores de autenticación
+│   ├── Http/
+│   │   ├── Controllers/Auth/    # Controladores de autenticación
+│   │   ├── Middleware/          # Middlewares personalizados
 │   │   ├── AdminDashboardController.php
 │   │   └── UserDashboardController.php
-│   ├── Models/                # Modelos Eloquent
-│   └── Http/Middleware/       # Middlewares personalizados
+│   └── Models/                  # Modelos Eloquent (User, Game, Cart, etc.)
 ├── database/
-│   ├── migrations/            # Migraciones de BD
-│   └── seeders/              # Datos de prueba
-├── resources/
-│   ├── views/                # Vistas Blade
-│   └── css/                  # Estilos personalizados
+│   ├── migrations/              # Migraciones de base de datos
+│   └── seeders/                 # Datos de prueba
+├── public/
+│   ├── css/                     # Estilos personalizados
+│   ├── js/                      # JavaScript personalizado
+│   └── storage/                 # Archivos públicos (imágenes)
+├── resources/views/
+│   ├── auth/                    # Vistas de autenticación
+│   ├── admin/                   # Vistas de administrador
+│   ├── user/                    # Vistas de usuario
+│   └── welcome.blade.php        # Página principal
 └── routes/
-    ├── web.php               # Rutas web
-    └── auth.php              # Rutas de autenticación
-🎯 Funcionalidades Implementadas
-✅ Sistema de Autenticación
+    ├── web.php                  # Rutas principales
+    └── auth.php                 # Rutas de autenticación
+```
 
- Login/Registro con Laravel Breeze
- Redirección automática por roles
- Middleware de protección de rutas
+## 🚀 Características Implementadas
 
-✅ Gestión de Usuarios
+### ✅ Sistema de Autenticación
+- Sistema completo de login/registro con Laravel Breeze
+- Redirección automática según roles (Admin/Usuario)
+- Middleware de protección de rutas
+- Gestión de sesiones segura
 
- Roles: Admin y Usuario
- Campos adicionales: bio, imagen de perfil
- Dashboards separados por rol
+### ✅ Gestión de Usuarios
+- Roles diferenciados: Administrador y Usuario
+- Campos personalizados: biografía, imagen de perfil
+- Dashboards específicos por rol
+- Perfiles de usuario editables
 
-✅ Base de Datos
+### ✅ Base de Datos Completa
+- 12 migraciones estructuradas
+- Modelos con relaciones establecidas
+- Seeders con datos realistas de juegos
+- Índices optimizados para rendimiento
 
- Migraciones completas
- Modelos con relaciones
- Seeders con datos de prueba
+### 🔄 En Desarrollo
+- Tienda con carrito de compras
+- Sistema de foro comunitario
+- Gestión completa de reseñas
+- Panel de administración avanzado
+- Integración de pagos (Yape/Tarjeta)
 
-🔄 En Desarrollo
+## 🎮 Datos de Prueba Incluidos
 
- Tienda y carrito de compras
- Sistema de foro
- Gestión de reseñas
- Panel de administración completo
- Procesamiento de pagos
+El sistema incluye seeders que generan:
+- **5 categorías** de juegos: Acción, Aventura, Supervivencia, Terror, Estrategia
+- **10 juegos populares** con información completa (precios, descripciones, screenshots)
+- **4 usuarios** listos para usar (1 administrador + 3 usuarios normales)
+- **Datos estructurados** para testing inmediato
 
-🎮 Datos de Prueba
-El proyecto incluye seeders que crean:
+## 🔧 Comandos Útiles
 
-5 categorías de juegos (Acción, Aventura, Supervivencia, Terror, Estrategia)
-10 juegos populares con información completa
-4 usuarios (1 admin + 3 usuarios normales)
+```bash
+# Limpiar todas las cachés
+php artisan optimize:clear
 
-🚨 Comandos Útiles
-bash# Limpiar caché
-php artisan cache:clear
-php artisan config:clear
-php artisan route:clear
-
-# Refrescar base de datos
+# Refrescar base de datos completamente
 php artisan migrate:fresh --seed
 
-# Ver rutas disponibles
+# Ver todas las rutas disponibles
 php artisan route:list
 
-# Generar nueva clave de aplicación
+# Regenerar clave de aplicación
 php artisan key:generate
-🎨 Personalización
-Cambiar imágenes de login/registro
 
-Coloca tu imagen en public/storage/
-Actualiza la ruta en public/css/login.css y public/css/register.css:
+# Compilar assets para desarrollo
+npm run dev
 
-cssbackground: url('/storage/tu-imagen.jpg');
-Modificar colores del tema
-Los archivos CSS principales están en:
+# Compilar assets para producción
+npm run build
+```
 
-public/css/login.css - Estilos de login
-public/css/register.css - Estilos de registro
-public/css/welcome.css - Página de inicio
+## 🎨 Personalización
 
-🐛 Solución de Problemas Comunes
-Error: "Route [login] not defined"
-bashphp artisan route:clear
+### Cambiar Imágenes de Fondo
+1. Sube tu imagen a `public/storage/`
+2. Actualiza las rutas en los archivos CSS:
+   - `public/css/login.css`
+   - `public/css/register.css`
+   - `public/css/welcome.css`
+
+```css
+/* Ejemplo en login.css */
+background: url('/storage/tu-nueva-imagen.jpg');
+```
+
+### Modificar Colores del Tema
+Los archivos principales para personalizar:
+- **Login**: `public/css/login.css`
+- **Registro**: `public/css/register.css`
+- **Página principal**: `public/css/welcome.css`
+
+## 🐛 Solución de Problemas
+
+### Error: "Route [login] not defined"
+```bash
+php artisan route:clear
 php artisan config:clear
-Error de permisos en storage/
-bashchmod -R 775 storage/
+php artisan serve
+```
+
+### Problemas de Permisos
+```bash
+chmod -R 775 storage/
 chmod -R 775 bootstrap/cache/
-Error de base de datos
+```
 
-Verifica la configuración en .env
-Ejecuta php artisan migrate:fresh --seed
+### Base de Datos no se Conecta
+1. Verifica la configuración en `.env`
+2. Para SQLite: `touch database/database.sqlite`
+3. Ejecuta: `php artisan migrate:fresh --seed`
 
-Assets no se cargan
-bashnpm run dev
+### Assets no se Cargan
+```bash
+npm run build
 php artisan storage:link
-🤝 Contribuir
+```
 
-Fork el proyecto
-Crea una rama para tu feature (git checkout -b feature/nueva-funcionalidad)
-Commit tus cambios (git commit -am 'Agregar nueva funcionalidad')
-Push a la rama (git push origin feature/nueva-funcionalidad)
-Abre un Pull Request
+### Error de Composer
+```bash
+composer clear-cache
+composer install --no-cache
+```
 
-📞 Soporte
-Si tienes problemas durante la instalación:
+## 🤝 Contribuir al Proyecto
 
-Revisa los logs: storage/logs/laravel.log
-Verifica la configuración: .env
-Limpia caché: php artisan optimize:clear
+1. **Fork** el repositorio
+2. **Crea** una rama: `git checkout -b feature/nueva-funcionalidad`
+3. **Commit** tus cambios: `git commit -am 'Agregar nueva funcionalidad'`
+4. **Push** a la rama: `git push origin feature/nueva-funcionalidad`
+5. **Abre** un Pull Request
 
-🏗️ Próximos Pasos
+## 📞 Soporte Técnico
 
- Implementar carrito de compras
- Sistema de pagos con Yape
- Foro interactivo
- Subida de imágenes
- API REST
- Notificaciones en tiempo real
+Si encuentras problemas:
 
+1. **Revisa los logs**: `storage/logs/laravel.log`
+2. **Verifica configuración**: Archivo `.env`
+3. **Limpia caché**: `php artisan optimize:clear`
+4. **Recrea base de datos**: `php artisan migrate:fresh --seed`
 
-Desarrollado con ❤️ usando Laravel 11
-¡Happy Gaming! 🎮
+## 🏗️ Roadmap de Desarrollo
+
+### Próximas Funcionalidades
+- [ ] **Tienda completa** con carrito y checkout
+- [ ] **Sistema de pagos** integrado (Yape + Tarjetas)
+- [ ] **Foro interactivo** con hilos por juego
+- [ ] **Sistema de reseñas** con puntuaciones
+- [ ] **Panel de admin** con estadísticas
+- [ ] **API REST** para integración móvil
+- [ ] **Notificaciones** en tiempo real
+- [ ] **Sistema de wishlist**
+
+---
+
+**🎮 Desarrollado con Laravel 11 | Happy Gaming!**
